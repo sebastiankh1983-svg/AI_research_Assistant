@@ -336,13 +336,28 @@ app.post('/api/research', async (req, res) => {
     // Agent ausführen
     const summary = await runResearchAgent(topic);
 
+    // Prüfe ob eine sinnvolle Antwort kam
+    if (!summary || summary.trim().length === 0) {
+      console.warn('⚠️ Agent returned empty summary');
+      return res.json({
+        summary: 'Die Recherche konnte keine Ergebnisse liefern. Bitte versuche es mit einem anderen Thema.',
+        sources: []
+      });
+    }
+
     // URLs aus der Zusammenfassung extrahieren
     const sources = extractUrls(summary);
 
     console.log(`✅ Research completed. Found ${sources.length} sources`);
 
-    // In Appwrite speichern
-    await saveResearch(userId, topic, summary, sources);
+    // In Appwrite speichern (nur wenn erfolgreich, sonst Fehler loggen)
+    try {
+      await saveResearch(userId, topic, summary, sources);
+      console.log('💾 Saved to Appwrite successfully');
+    } catch (saveError) {
+      console.error('⚠️ Failed to save to Appwrite:', saveError.message);
+      // Wir geben trotzdem die Antwort zurück, auch wenn das Speichern fehlschlägt
+    }
 
     res.json({ summary, sources });
 
