@@ -1,0 +1,14 @@
+# Environment Variables
+.env
+.env.local
+
+# Dependencies
+node_modules/
+
+# Local research notes
+research-notes/
+
+# Logs
+*.log
+npm-debug.log*
+
