@@ -4,7 +4,7 @@
 // HIER FINDET DIE VERBINDUNG ZUM BACKEND STATT! (fetch() Aufrufe)
 
 import { useState } from 'react';
-import { API_ENDPOINTS } from '../config';
+import { API_ENDPOINTS, API_URL } from '../config';
 
 interface Message {
   role: 'user' | 'ai';
@@ -63,7 +63,7 @@ function ResearchChat({ userId }: ResearchChatProps) {
       console.error('❌ Backend request failed:', error);
       const errorMsg: Message = {
         role: 'ai',
-        content: `❌ Fehler: ${error.message}\n\nIst das Backend gestartet? (http://localhost:3001)`
+        content: `❌ Fehler: ${error.message}\n\nIst das Backend gestartet? (${API_URL})`
       };
       setMessages(prev => [...prev, errorMsg]);
     } finally {
