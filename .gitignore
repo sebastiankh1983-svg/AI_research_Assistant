@@ -1,0 +1,29 @@
+# Environment Variables
+.env
+.env.local
+.env.production
+
+# API Keys & Secrets
+**/RAILWAY_ENV_VARIABLES.md
+
+# Node modules
+node_modules/
+**/node_modules/
+
+# Build outputs
+dist/
+build/
+.next/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
