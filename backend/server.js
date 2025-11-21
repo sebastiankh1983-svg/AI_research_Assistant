@@ -42,13 +42,25 @@ const PORT = process.env.PORT || 3001;
 
 // Middleware - CORS mit Vercel URL
 app.use(cors({
-  origin: [
-    'http://localhost:5173',
-    'http://localhost:3000',
-    'https://ai-research-assistant-d41ewi3pm-sebastians-projects-454ccc40.vercel.app',
-    'https://ai-research-assistant-sebastians-projects-454ccc40.vercel.app',
-    'https://*.vercel.app' // Erlaubt alle Vercel Preview-Deployments
-  ],
+  origin: function (origin, callback) {
+    // Erlaubte Origins
+    const allowedOrigins = [
+      'http://localhost:5173',
+      'http://localhost:3000',
+      'https://ai-research-assistant-d41ewi3pm-sebastians-projects-454ccc40.vercel.app',
+      'https://ai-research-assistant-ytwel10dk-sebastians-projects-454ccc40.vercel.app',
+      'https://ai-research-assistant-mn59ryc68-sebastians-projects-454ccc40.vercel.app',
+      'https://ai-research-assistant-sebastians-projects-454ccc40.vercel.app'
+    ];
+
+    // Wenn keine Origin (Server-to-Server) oder Origin in der Liste
+    if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
+      callback(null, true);
+    } else {
+      console.log('⚠️ CORS blocked origin:', origin);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }));
 app.use(express.json());
