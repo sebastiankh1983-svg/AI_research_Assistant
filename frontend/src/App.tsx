@@ -17,7 +17,7 @@ function App() {
   // Check if user is already logged in
   useEffect(() => {
     account.get()
-      .then(user => {
+      .then((user: any) => {
         console.log('✅ User already logged in:', user.$id);
         setUserId(user.$id);
       })
