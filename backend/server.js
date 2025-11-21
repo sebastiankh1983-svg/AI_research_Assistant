@@ -40,8 +40,17 @@ console.log('✅ All environment variables loaded');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Middleware
-app.use(cors());
+// Middleware - CORS mit Vercel URL
+app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    'http://localhost:3000',
+    'https://ai-research-assistant-d41ewi3pm-sebastians-projects-454ccc40.vercel.app',
+    'https://ai-research-assistant-sebastians-projects-454ccc40.vercel.app',
+    'https://*.vercel.app' // Erlaubt alle Vercel Preview-Deployments
+  ],
+  credentials: true
+}));
 app.use(express.json());
 
 // =========================
