@@ -10,6 +10,33 @@ import { HumanMessage, AIMessage } from '@langchain/core/messages';
 import fs from 'fs/promises';
 import path from 'path';
 
+// =========================
+// ENVIRONMENT VALIDATION
+// =========================
+const requiredEnvVars = [
+  'OPENAI_API_KEY',
+  'TAVILY_API_KEY',
+  'APPWRITE_ENDPOINT',
+  'APPWRITE_PROJECT_ID',
+  'APPWRITE_DATABASE_ID',
+  'APPWRITE_COLLECTION_ID',
+  'APPWRITE_API_KEY'
+];
+
+const missingEnvVars = requiredEnvVars.filter(varName => !process.env[varName]);
+
+if (missingEnvVars.length > 0) {
+  console.error('❌ FEHLER: Fehlende Environment-Variablen:');
+  missingEnvVars.forEach(varName => {
+    console.error(`   - ${varName}`);
+  });
+  console.error('\n📝 Bitte konfiguriere diese Variablen in Railway:');
+  console.error('   Railway Dashboard → Settings → Variables');
+  process.exit(1);
+}
+
+console.log('✅ All environment variables loaded');
+
 const app = express();
 const PORT = process.env.PORT || 3001;
 
