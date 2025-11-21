@@ -5,6 +5,8 @@
 
 # API Keys & Secrets
 **/RAILWAY_ENV_VARIABLES.md
+RAILWAY_SETUP_NOW.md
+RAILWAY_DEBUG.md
 
 # Node modules
 node_modules/
@@ -26,4 +28,3 @@ Thumbs.db
 # Logs
 *.log
 npm-debug.log*
-
